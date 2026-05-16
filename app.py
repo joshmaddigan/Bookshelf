@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -10,6 +10,22 @@ books = [
 @app.route('/books')
 def get_books():
     return jsonify(books)
+
+@app.route('/books', methods=['POST'])
+def add_book():
+    data = request.get_json()
+    new_book = {
+        'id': len(books) + 1,
+        'title': data['title'],
+        'author': data['author'],
+        'genre': data['genre'],
+        'series': data['series'],
+        'status': data['status'],
+        'rating': data['rating'],
+        'comments': data['comments']
+    }
+    books.append(new_book)
+    return jsonify(new_book)
 
 
 if __name__ == "__main__":
