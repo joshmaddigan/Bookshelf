@@ -28,5 +28,19 @@ def add_book():
     return jsonify(new_book)
 
 
+@app.route('/books/<id>', methods=["GET"])
+def get_id(id):
+
+    for book in books:
+        if book['id'] == int(id):
+            return jsonify(book)
+    else:
+        return (f"no book found")
+
+
+
+
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
